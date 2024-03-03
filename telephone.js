@@ -14,9 +14,9 @@ class Telephone {
         this.observers.delete(observer)
     }
 
-    notify(context) {
+    notify(number) {
         for (let observer of this.observers) {
-            observer.update(context)
+            observer.update(number)
         }
     }
 
@@ -34,7 +34,8 @@ class Telephone {
 
     DialPhoneNumber(number) {
         if(numbers.includes(number)) {
-            console.log("Dialling phone number " + number)
+            console.log("Dialling.....")
+            this.notify(number)
         } else {
             console.log("You need to add the number first")
         }
@@ -43,21 +44,34 @@ class Telephone {
 
 }
 
-const get = new Telephone
-get.AddPhoneNumber(666876)
-get.RemovePhoneNumber(666876)
 
-console.log(numbers)
-
-class Observer{
+class NumberObserver{
     constructor() {}
 
-    update() {
-
+    update(number) {
+        console.log("The number is " + number)
     }
 
 
 }
 
-const obsv = new Observer
+class NowDiallingObserver {
+
+    update() {
+        console.log("Now Dialling 2347023232")
+    }
+}
+
+const get = new Telephone
+get.AddPhoneNumber(2348033096778)            //adding sample numbers
+get.AddPhoneNumber(2348152771687)
+get.AddPhoneNumber(2347086645218)
+get.AddPhoneNumber(2349099826361)
+get.RemovePhoneNumber(2347086645218)         //removing one of sample numbers
+
+const obsv = new NumberObserver
+const obsv2 = new NowDiallingObserver
 get.add(obsv)
+get.add(obsv2)
+get.DialPhoneNumber(2348152771687)
+//console.log(numbers)                      //to view all numbers
